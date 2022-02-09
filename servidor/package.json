@@ -9,7 +9,7 @@
     },
     "description": "Servidor de jogo Web multijogador",
     "engines": {
-        "node": "14.x"
+        "node": "16.x"
     },
     "homepage": "https://github.com/boidacarapreta/arc20202#readme",
     "keywords": [
