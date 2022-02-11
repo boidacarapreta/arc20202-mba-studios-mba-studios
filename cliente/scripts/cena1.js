@@ -18,6 +18,8 @@ var water;
 var water2;
 var water3;
 var gate;
+var player1Goal;
+var player2Goal;
 // var trilha;
 var pular;
 var life = 0;
@@ -239,7 +241,6 @@ cena1.create = function () {
   this.physics.add.collider(water, platforms, null, null, this);
   this.physics.add.collider(water2, platforms, null, null, this);
   this.physics.add.collider(water3, platforms, null, null, this);
-  this.physics.add.collider(gate, platforms, null, null, this);
 
   // [Bruna] Definindo colisão com a água.
   this.physics.add.collider(player1, water, deathA, null, this);
@@ -249,7 +250,10 @@ cena1.create = function () {
   this.physics.add.collider(player1, water3, deathE, null, this);
   this.physics.add.collider(player2, water3, deathF, null, this);
 
-
+  // Fim da fase
+  this.physics.add.collider(gate, platforms, null, null, this);
+  this.physics.add.overlap(player1, gate, goal, null, this);
+  this.physics.add.overlap(player2, gate, goal, null, this);
 
   // [Arthur] Função para avançar a cena, posteriormente será trocada por um evento de colisão.
   this.input.keyboard.on(
@@ -388,35 +392,51 @@ cena1.update = function () {
       y: player2.body.y + 10,
     });
   }
+
+  // Verifica se os dois jogadores estão no portal
+  // Se sim, saltam para a próxima cena
+  if (player1Goal === true && player2Goal === true) {
+    this.scene.start(cena2)
+  }
+
+  // Zera as variáveis no próximo update/frame
+  player1Goal = false
+  player2Goal = false
 }
 
 function deathA(player1, water) {
   this.scene.start(gameover);
-
 }
 function deathB(player2, water) {
   this.scene.start(gameover);
-
 }
 
 function deathC(player1, water2) {
   this.scene.start(gameover);
-
 }
 
 function deathD(player2, water2) {
   this.scene.start(gameover);
-
 }
 
 function deathE(player1, water3) {
   this.scene.start(gameover);
-
 }
 
 function deathF(player2, water3) {
   this.scene.start(gameover);
+}
 
+// Verifica qual jogador está no portal
+function goal(player, gate) {
+  if (player === player1) {
+    player1Goal = true
+    console.log("Jogador 1 no portal...")
+  }
+  if (player === player2) {
+    player2Goal = true
+    console.log("Jogador 2 no portal...")
+  }
 }
 
 // ================================================
