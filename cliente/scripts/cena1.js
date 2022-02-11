@@ -7,6 +7,7 @@ Brief: second import archive.
 
 // [Arthur] importando a cena seguinte do arquivo "cena2.js"
 import { cena2 } from "./cena2.js";
+import { gameover } from "./gameover.js";
 
 // [Arthur] Adicionando variáveis ao código para execução dos comandos.
 var player1;
@@ -240,6 +241,15 @@ cena1.create = function () {
   this.physics.add.collider(water3, platforms, null, null, this);
   this.physics.add.collider(gate, platforms, null, null, this);
 
+  // [Bruna] Definindo colisão com a água.
+  this.physics.add.collider(player1, water, deathA, null, this);
+  this.physics.add.collider(player2, water, deathB, null, this);
+  this.physics.add.collider(player1, water2, deathC, null, this);
+  this.physics.add.collider(player2, water2, deathD, null, this);
+  this.physics.add.collider(player1, water3, deathE, null, this);
+  this.physics.add.collider(player2, water3, deathF, null, this);
+
+
 
   // [Arthur] Função para avançar a cena, posteriormente será trocada por um evento de colisão.
   this.input.keyboard.on(
@@ -378,58 +388,49 @@ cena1.update = function () {
       y: player2.body.y + 10,
     });
   }
+}
 
-  function deathA(player1, water) {
-    this.scene.start(cena3);
+function deathA(player1, water) {
+  this.scene.start(gameover);
 
+}
+function deathB(player2, water) {
+  this.scene.start(gameover);
+
+}
+
+function deathC(player1, water2) {
+  this.scene.start(gameover);
+
+}
+
+function deathD(player2, water2) {
+  this.scene.start(gameover);
+
+}
+
+function deathE(player1, water3) {
+  this.scene.start(gameover);
+
+}
+
+function deathF(player2, water3) {
+  this.scene.start(gameover);
+
+}
+
+// ================================================
+// [Arthur] Iniciando a função contdown, para fazer a contagem do tempo da cena.
+function countdown() {
+  life += 1;
+  lifeText.setText(life);
+  timer -= 1;
+  timerText.setText(timer);
+  if (timer === 0) {
+    // trilha.stop();
+    this.scene.start(cena2);
   }
-  function deathB(player2, water) {
-    this.scene.start(cena3);
+}
 
-  }
-
-  function deathC(player1, water2) {
-    this.scene.start(cena3);
-
-  }
-
-  function deathD(player2, water2) {
-    this.scene.start(cena3);
-
-  }
-
-  function deathE(player1, water3) {
-    this.scene.start(cena3);
-
-  }
-
-  function deathF(player2, water3) {
-    this.scene.start(cena3);
-
-  }
-
-
-
-  // [Bruna] Definindo colisão com a água.
-  this.physics.add.collider(player1, water, deathA, null, this);
-  this.physics.add.collider(player2, water, deathB, null, this);
-  this.physics.add.collider(player1, water2, deathC, null, this);
-  this.physics.add.collider(player2, water2, deathD, null, this);
-  this.physics.add.collider(player1, water3, deathE, null, this);
-  this.physics.add.collider(player2, water3, deathF, null, this);
-
-  // ================================================
-  // [Arthur] Iniciando a função contdown, para fazer a contagem do tempo da cena.
-  function countdown() {
-    life += 1;
-    lifeText.setText(life);
-    timer -= 1;
-    timerText.setText(timer);
-    if (timer === 0) {
-      // trilha.stop();
-      this.scene.start(cena2);
-    }
-  }
-};
 // [Arthur] Exportando cena 1 para o index.js.
 export { cena1 };
